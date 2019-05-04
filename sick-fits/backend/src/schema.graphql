@@ -5,5 +5,5 @@ type Mutation {
 } 
 
 type Query {
-  item: [Item]!
+  items: [Item]!
 }
