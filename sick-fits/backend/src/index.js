@@ -1,3 +1,5 @@
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 // Will start our node server
 // Make sure our variable our available to our application by require them here since it's the entry point of our application
 require("dotenv").config({ path: "variables.env" });
@@ -9,7 +11,21 @@ const db = require("./db");
 const server = createServer();
 
 // TODO Use express middlware to handle coolies (JWT = Json Web Tokens)
+server.express.use(cookieParser());
+
 // TODO Use express middlware to populate current user
+// decode the JWT so we can get the user ID on each request
+server.express.use((req, res, next) => {
+  const { token } = req.cookies;
+  if (token) {
+    const { userId } = jwt.verify(token, process.env.APP_SECRET);
+    // put the userId onto the req for future requests to access
+    req.userId = userId;
+  }
+
+  next();
+})
+
 
 server.start(
   {
