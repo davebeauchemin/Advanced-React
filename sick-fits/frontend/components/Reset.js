@@ -48,16 +48,17 @@ class Reset extends Component {
           { query: CURRENT_USER_QUERY }
         ]}
       >
-        {(signup, { error, loading }) => {
+        {(reset, { error, loading }) => {
           return (
             <Form method="post" onSubmit={async e => {
               e.preventDefault();
-              await signup();
+              await reset();
               this.setState({ password: '', confirmPassword: '' })
             }}>
               <fieldset disabled={loading} aria-busy={loading}>
                 <h2>Reset your password</h2>
                 <Error error={error} />
+                {!error && !loading && <p>Your password has been updated!</p>}
                 <label htmlFor="password">
                   Password
                 <input
@@ -67,7 +68,7 @@ class Reset extends Component {
                     onChange={this.saveToState} />
                 </label>
                 <label htmlFor="confirmPassword">
-                  Confirm Your Password
+                  Confirm Password
                 <input
                     type="password"
                     name="confirmPassword"
@@ -75,7 +76,7 @@ class Reset extends Component {
                     value={this.state.confirmPassword}
                     onChange={this.saveToState} />
                 </label>
-                <button type="submit">Sign In</button>
+                <button type="submit">Reset Password</button>
               </fieldset>
             </Form>
           )
