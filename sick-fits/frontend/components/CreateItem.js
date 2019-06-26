@@ -43,7 +43,7 @@ class CreateItem extends Component {
   }
 
   uploadFile = async (e) => {
-    console.log('Uploading File...');
+    this.newMethod()('Uploading File...');
     const files = e.target.files;
     const data = new FormData();
     data.append('file', files[0]);
@@ -61,6 +61,10 @@ class CreateItem extends Component {
     })
   }
 
+  newMethod() {
+    return console.log;
+  }
+
   render() {
     return (
       <Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
@@ -76,7 +80,7 @@ class CreateItem extends Component {
               pathname: '/item',
               query: { id: res.data.createItem.id }
             })
-            console.log(res)
+            // console.log(res)
           }}
           >
             <Error error={error} />
